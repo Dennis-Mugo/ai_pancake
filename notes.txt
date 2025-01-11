@@ -1,0 +1,12 @@
+server requirements modification
+greenlet
+pyee
+pyktok
+playwright
+twilio
+easyocr
+
+remove
+pywin32
+WMI
+
