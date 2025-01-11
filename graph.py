@@ -21,7 +21,7 @@ langsmith_api_key = os.getenv("LANGSMITH_API_KEY")
 
 import easyocr
 import requests
-image_reader = easyocr.Reader(['en', 'es', 'de'], gpu=False)
+image_reader = easyocr.Reader(['en', 'es', 'de'], gpu=True)
 
 
 
