@@ -89,6 +89,8 @@ class Graph:
 
         res = requests.get(self.online_images[0][0])
         text = image_reader.readtext(res.content)
+        if len(text) == 0:
+            return {"documents": [], "question": "tell the user that no text could be found in the image",  "generation": ""}
         lines = [f"{item[1]}" for item in text]
         text = "/n".join(lines)
         new_question = text + "\n\n" + state["question"]
