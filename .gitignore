@@ -1,0 +1,9 @@
+/__pycache__
+/db
+/twilio_util/__pycache__
+/utils/__pycache__
+/venv
+.env
+/firebase_config/__pycache__
+/firebase_config/credentials.json
+/firebase_config/private.json
