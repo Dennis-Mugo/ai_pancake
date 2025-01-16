@@ -8,6 +8,7 @@ if not firebase_admin._apps:
 
 bucket = storage.bucket()
 db = firestore.client()
+
 # import firebase_admin
 # from firebase_admin import credentials, storage, firestore, auth
 

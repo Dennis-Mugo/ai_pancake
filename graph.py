@@ -14,6 +14,8 @@ from langchain_core.output_parsers import StrOutputParser
 from dotenv import load_dotenv
 import os
 
+from utils.utils import is_valid_link, get_tiktok_video_url
+
 load_dotenv()
 
 groq_api_key = os.getenv("GROQ_API_KEY")
@@ -38,6 +40,7 @@ class GraphState(TypedDict):
     question: str
     generation: str
     documents: List[str]
+    
 
 class Graph:
     def __init__(self, num_documents_source=None, collection_name="", online_pdfs=[], local_pdfs=[], web_urls=[], yt_urls=[], tiktok_urls=[], online_images=[]):
@@ -57,7 +60,13 @@ class Graph:
     def rag_llm_router(self, state: GraphState):
         print("---RAG LLM ROUTER---")
         print(self.__dict__)
-        if self.online_pdfs[0]:
+
+        question = state["question"]
+
+        if is_valid_link(question) and ("https://vm.tiktok.com" in question or "https://www.tiktok.com" in question):
+            return "tiktok_download"
+
+        elif self.online_pdfs[0]:
             
             return "create_rag"
         elif self.online_images[0]:
@@ -88,6 +97,7 @@ class Graph:
         # text = image_reader.readtext(self.online_images[0][0])
 
         res = requests.get(self.online_images[0][0])
+        text = ""
         text = image_reader.readtext(res.content)
 
         if len(text) == 0:
@@ -110,6 +120,16 @@ class Graph:
         llm = ChatGroq(groq_api_key=groq_api_key,model_name="llama3-70b-8192")
         answer = llm.invoke(messages)
         return {"documents": [], "question": state["question"],  "generation": answer.content}
+    
+    def tiktok_download(self, state: GraphState):
+        print("---TIKTOK DOWNLOAD---")
+
+        url = state["question"]
+        new_url = get_tiktok_video_url(url)
+        if new_url:
+            return {"documents": [], "question": state["question"],  "generation": new_url}
+        
+        return {"documents": [], "question": state["question"],  "generation": "Could not download the video. Please try again."}
 
     def retrieve(self, state: GraphState):
         """
