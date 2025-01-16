@@ -30,6 +30,7 @@ class WorkFlow:
         workflow.add_node("create_rag", self.graph.create_rag)  
         workflow.add_node("llm_image_search", self.graph.llm_image_search)  
         workflow.add_node("llm_text_search", self.graph.llm_text_search) 
+        workflow.add_node("tiktok_download", self.graph.tiktok_download)
         workflow.add_node("retrieve", self.graph.retrieve) 
         workflow.add_node("generate", self.graph.generate) 
 
@@ -41,7 +42,8 @@ class WorkFlow:
             {
                 "create_rag": "create_rag",
                 "llm_image_search": "llm_image_search",
-                "llm_text_search": "llm_text_search"
+                "llm_text_search": "llm_text_search",
+                "tiktok_download": "tiktok_download"
             }
             )
         
@@ -58,6 +60,9 @@ class WorkFlow:
 
         workflow.add_edge("retrieve", "generate")
         workflow.add_edge("generate", END)
+
+        # Branch 4
+        workflow.add_edge("tiktok_download", END)
 
     
 
