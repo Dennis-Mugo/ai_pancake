@@ -101,10 +101,10 @@ def get_tiktok_video_url(url):
         print(download_name)
         new_url = upload_file(download_name)
         print(new_url)
-        return new_url
+        return {"link": new_url, "error": False}
     except Exception as e:
         print(str(e))
-        return None
+        return {"link": False, "error": str(e)}
     
 
 def is_valid_link(string):

@@ -126,10 +126,10 @@ class Graph:
 
         url = state["question"]
         new_url = get_tiktok_video_url(url)
-        if new_url:
+        if new_url["link"]:
             return {"documents": [], "question": state["question"],  "generation": new_url}
         
-        return {"documents": [], "question": state["question"],  "generation": "Could not download the video. Please try again."}
+        return {"documents": [], "question": state["question"],  "generation": new_url["error"]}
 
     def retrieve(self, state: GraphState):
         """
