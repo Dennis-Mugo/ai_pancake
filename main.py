@@ -2,8 +2,8 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import json
 import random
-from twilio_util.main import send_multiple_messages, format_twilio_url
-from utils.utils import validate_message, is_banned_user
+from twilio_util.main import send_multiple_messages, send_message, format_twilio_url
+from utils.utils import validate_message, is_banned_user, is_valid_link
 from utils.database import addUserChatToDatabase_w, addAssistantChatToDatabase_w
 from flow import WorkFlow
 
@@ -43,6 +43,7 @@ def prompt():
     media_type = body.get("MediaContentType0", "")
     media_url = body.get("MediaUrl0", "")
 
+   
 
     addUserChatToDatabase_w(user_id, body)
 
@@ -100,7 +101,11 @@ def prompt():
         res["data"] = result
         print(result)
         addAssistantChatToDatabase_w(user_id, result)
-        send_multiple_messages(body=result["generation"], to=user_id)
+
+        if is_valid_link(result["generation"]):
+            send_message(body="Here is your downloaded video😊", to=user_id, media_url=[result["generation"]])
+        else:
+            send_multiple_messages(body=result["generation"], to=user_id)
 
     except Exception as e:
         print(e)

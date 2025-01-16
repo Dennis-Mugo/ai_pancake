@@ -60,6 +60,23 @@ def split_long_message(text):
         counter += limit
     return messages
 
+
+def send_message(body, to, from_="whatsapp:+12314325850", media_url=[]):
+    try:
+        message = client.messages.create(
+            body=body,
+            from_=from_,
+            media_url=media_url,
+            to=f"whatsapp:+{to}",
+        )
+        message = message.__dict__
+        return message
+
+    except TwilioRestException as e:
+        print(e.msg)
+        return {"error": e.msg, "messages": []}
+
+
 def send_multiple_messages(body, to, from_="whatsapp:+12314325850"):
     formatted = format_text(body)
     messages = split_long_message(formatted)
