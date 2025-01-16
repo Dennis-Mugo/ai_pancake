@@ -7,3 +7,4 @@
 /firebase_config/__pycache__
 /firebase_config/credentials.json
 /firebase_config/private.json
+nginx_config
