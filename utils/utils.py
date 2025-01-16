@@ -43,13 +43,15 @@ def validate_message(message_type, media_type):
     
 
 def is_banned_user(user_id):
-    banned_users = ["254742063263"]
+    #banned_users = ["254742063263", "254723068001"]
+    banned_users = []
     message = False
     if user_id not in banned_users:
-        return message
+      return False
 
     message = "You are banned from using this service 😔"
     return message
+
 
 def download_video(url=None):
     import pyktok as pyk
@@ -114,3 +116,4 @@ def is_valid_link(string):
 
 
     
+

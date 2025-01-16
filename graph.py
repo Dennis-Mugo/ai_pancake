@@ -99,7 +99,7 @@ class Graph:
         res = requests.get(self.online_images[0][0])
         text = ""
         text = image_reader.readtext(res.content)
-        
+
         if len(text) == 0:
             return {"documents": [], "question": "tell the user that no text could be found in the image",  "generation": ""}
         lines = [f"{item[1]}" for item in text]
