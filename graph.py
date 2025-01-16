@@ -23,7 +23,7 @@ langsmith_api_key = os.getenv("LANGSMITH_API_KEY")
 
 import easyocr
 import requests
-image_reader = easyocr.Reader(['en', 'es', 'de'], gpu=True)
+image_reader = easyocr.Reader(['en', 'es', 'de'], gpu=False)
 
 
 
@@ -127,7 +127,7 @@ class Graph:
         url = state["question"]
         new_url = get_tiktok_video_url(url)
         if new_url["link"]:
-            return {"documents": [], "question": state["question"],  "generation": new_url}
+            return {"documents": [], "question": state["question"],  "generation": new_url["link"]}
         
         return {"documents": [], "question": state["question"],  "generation": new_url["error"]}
 
