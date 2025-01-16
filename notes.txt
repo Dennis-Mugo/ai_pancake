@@ -10,3 +10,23 @@ remove
 pywin32
 WMI
 
+
+
+gunicorn server deploy
+https://www.markusdosch.com/2019/03/how-to-deploy-a-python-flask-application-to-the-web-with-google-cloud-platform-for-free/
+https://alex-volkov.medium.com/how-to-deploy-flask-on-google-cloud-gcp-compute-engine-with-gunicorn-nginx-systemd-96da1f32a11a
+
+Configure domain
+https://youtu.be/OKvOvHuOnrw
+
+Configure SSL certificate
+https://youtu.be/uSm3xepvUNM
+
+
+Important directories
+/etc/nginx/nginx.conf
+/var/log/nginx/access.log
+
+
+git push --set-upstream origin dennis
+venv/bin/gunicorn

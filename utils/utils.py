@@ -43,11 +43,10 @@ def is_banned_user(user_id):
     banned_users = ["254742063263"]
     message = False
     if user_id not in banned_users:
-        return False
-    if user_id == "254742063263":
-        message = "It's been long since you kissed your boyfriend.😔 You are therefore banned from using this service 😔"
-    else:
-        message = "You are banned from using this service 😔"
+        return message
+
+    
+    message = "You are banned from using this service 😔"
 
     return message
 
