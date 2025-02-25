@@ -16,6 +16,8 @@ gunicorn server deploy
 https://www.markusdosch.com/2019/03/how-to-deploy-a-python-flask-application-to-the-web-with-google-cloud-platform-for-free/
 https://alex-volkov.medium.com/how-to-deploy-flask-on-google-cloud-gcp-compute-engine-with-gunicorn-nginx-systemd-96da1f32a11a
 
+
+
 Configure domain
 https://youtu.be/OKvOvHuOnrw
 
@@ -26,7 +28,35 @@ https://youtu.be/uSm3xepvUNM
 Important directories
 /etc/nginx/nginx.conf
 /var/log/nginx/access.log
+/var/log/nginx/error.log warn
+/etc/systemd/system/gunicorn.service
+
+Important commands
+sudo journalctl -u gunicorn
+sudo journalctl -u gunicorn -f
+sudo tail -f /var/log/nginx/error.log
+sudo systemctl daemon-reload
 
 
 git push --set-upstream origin dennis
 venv/bin/gunicorn
+
+
+============================================================
+gunicorn.service
+Unit]
+Description=gunicorn daemon
+After=network.target
+
+[Service]
+PIDFile=/run/gunicorn/pid
+User=root
+RuntimeDirectory=gunicorn
+WorkingDirectory=/home/dennismugo2003/rag_2025
+ExecStart=/home/dennismugo2003/rag_2025/venv/bin/gunicorn main:app --timeout 120 --pid /run/gunicorn/pid --reload
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s TERM $MAINPID
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
